@@ -1,19 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
+import Navbar from './Navbar';
 import ProductCard from './ProductCard';
+import HomePage from './HomePage';
+import { Route, Switch } from 'wouter';
+import ProductsPage from './ProductsPage';
+import RegisterPage from './RegisterPage';
+import About from './About';
 
 function App() {
+    const [isNavbarShowing, setNavbarShowing] = useState(false); 
+    // Toggle the collapse state
+    const toggleNavbar = () => {
+      setNavbarShowing(!isNavbarShowing);
+    };
+  
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    
+      {/* <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
           <a className="navbar-brand" href="#">E-Shop</a>
           <button
             className="navbar-toggler"
             type="button"
+            onClick={toggleNavbar}
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
+          <div className={`collapse navbar-collapse ${isNavbarShowing ? "show" : ""}`} id="navbarNav">
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
                 <a className="nav-link active" aria-current="page" href="#">Home</a>
@@ -30,7 +44,18 @@ function App() {
             </ul>
           </div>
         </div>
-      </nav>
+      </nav> */}
+
+      <Navbar />
+
+      <Switch>
+        <Route path="/" component={HomePage} />
+        <Route path="/products" component={ProductsPage} />
+        <Route path="/register" component={RegisterPage} />
+        <Route path="/about" component={About} />
+      </Switch>
+
+      <HomePage />
 
       <header className="bg-primary text-white text-center py-5">
         <div className="container">

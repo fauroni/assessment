@@ -7,6 +7,7 @@ import ProductsPage from './ProductsPage';
 import RegisterPage from './RegisterPage';
 import About from './About';
 
+
 function App() {
     const [isNavbarShowing, setNavbarShowing] = useState(false); 
     // Toggle the collapse state

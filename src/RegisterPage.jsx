@@ -1,6 +1,7 @@
 import React from 'react';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Name is required'),
@@ -24,10 +25,17 @@ function RegisterPage() {
     country: ''
   };
 
-  const handleSubmit = (values, formikHelpers) => {
-    // Here you would typically make an API call to register the user
-    console.log('Form values:', values);
-    formikHelpers.setSubmitting(false);
+  const handleSubmit = async (values, formikHelpers) => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/register`, values);
+      console.log('Registration successful:', response.data);
+      // Handle successful registration (e.g., show success message, redirect)
+    } catch (error) {
+      console.error('Registration failed:', error.response?.data || error.message);
+      // Handle registration error (e.g., show error message)
+    } finally {
+      formikHelpers.setSubmitting(false);
+    }
   };
 
   return (
@@ -35,6 +43,7 @@ function RegisterPage() {
       <h1>Register</h1>
       <Formik
         initialValues={initialValues}
+        validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         {(formik) => (
@@ -47,6 +56,7 @@ function RegisterPage() {
                 id="name"
                 name="name"
               />
+                 {formik.errors.name && formik.touched.name ? <div className="text-danger">{formik.errors.name}</div> : null}
             </div>
 
             <div className="mb-3">
@@ -57,6 +67,7 @@ function RegisterPage() {
                 id="email"
                 name="email"
               />
+                 {formik.errors.name && formik.touched.email ? <div className="text-danger">{formik.errors.name}</div> : null}
             </div>
 
             <div className="mb-3">
@@ -67,6 +78,7 @@ function RegisterPage() {
                 id="password"
                 name="password"
               />
+              {formik.errors.name && formik.touched.password ? <div className="text-danger">{formik.errors.name}</div> : null}
             </div>
 
             <div className="mb-3">
@@ -77,6 +89,7 @@ function RegisterPage() {
                 id="confirmPassword"
                 name="confirmPassword"
               />
+              {formik.errors.name && formik.touched.confirmPassword ? <div className="text-danger">{formik.errors.name}</div> : null}
             </div>
 
             <div className="mb-3">
@@ -90,6 +103,7 @@ function RegisterPage() {
                     id="mr"
                     value="Mr"
                   />
+                  
                   <label className="form-check-label" htmlFor="mr">Mr</label>
                 </div>
                 <div className="form-check form-check-inline">

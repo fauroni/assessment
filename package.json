@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "axios": "^1.8.1",
+    "express": "^4.21.2",
     "formik": "^2.4.6",
     "immer": "^10.1.1",
     "jotai": "^2.12.2",

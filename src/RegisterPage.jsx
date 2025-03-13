@@ -4,8 +4,9 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useLocation } from 'wouter';
 import { useState } from 'react';
+import { useFlashMessage } from './FlashMessageStore';
 
-
+const { showMessage } = useFlashMessage();
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Name is required'),
@@ -31,20 +32,36 @@ function RegisterPage() {
 
   const [, setLocation] = useLocation();
   const [showSuccess, setShowSuccess] = useState(false);
-  
+
+
   const handleSubmit = async (values, formikHelpers) => {
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/register`, values);
       console.log('Registration successful:', response.data);
-      setLocation("/");
-      
+      showMessage('Registration successful!', 'success');
     } catch (error) {
       console.error('Registration failed:', error.response?.data || error.message);
-      // Handle registration error (e.g., show error message)
+      showMessage('Registration failed. Please try again.', 'error');
     } finally {
       formikHelpers.setSubmitting(false);
+      setLocation('/');
     }
   };
+
+  
+  // const handleSubmit = async (values, formikHelpers) => {
+  //   try {
+  //     const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/register`, values);
+  //     console.log('Registration successful:', response.data);
+  //     setLocation("/");
+      
+  //   } catch (error) {
+  //     console.error('Registration failed:', error.response?.data || error.message);
+  //     // Handle registration error (e.g., show error message)
+  //   } finally {
+  //     formikHelpers.setSubmitting(false);
+  //   }
+  // };
 
   return (
     <div className="container mt-5">
@@ -194,5 +211,6 @@ function RegisterPage() {
     </div>
   );
 }
+
 
 export default RegisterPage;

@@ -11,12 +11,18 @@
   },
   "dependencies": {
     "axios": "^1.8.1",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "formik": "^2.4.6",
     "immer": "^10.1.1",
     "jotai": "^2.12.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.13.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "stripe": "^17.7.0",
     "wouter": "^3.6.0",
     "yup": "^1.6.1"
   },

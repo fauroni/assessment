@@ -6,7 +6,7 @@ import { useLocation } from 'wouter';
 import { useState } from 'react';
 import { useFlashMessage } from './FlashMessageStore';
 
-const { showMessage } = useFlashMessage();
+
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Name is required'),
@@ -32,6 +32,7 @@ function RegisterPage() {
 
   const [, setLocation] = useLocation();
   const [showSuccess, setShowSuccess] = useState(false);
+  const { showMessage } = useFlashMessage();
 
 
   const handleSubmit = async (values, formikHelpers) => {

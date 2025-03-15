@@ -51,10 +51,32 @@ export const useCart = () => {
     setCart(updateFunc);
   };
 
+  const modifyQuantity = (product_id, quantity) => {
+    setCart((currentCart) => {
+      const existingItemIndex = currentCart.findIndex(item => item.product_id === product_id);
+      if (existingItemIndex !== -1) {
 
+        // check if the quantity will be reduced to 0 or less, if so remove the item
+        if (quantity < 0) {
+          return currentCart.filter(item => item.product_id !== product_id);
+        } else {                      
+            return currentCart.setIn([existingItemIndex, 'quantity'], quantity);
+        }
+
+      }
+    });
+  }
+
+  const removeFromCart = (product_id) => {
+    setCart((currentCart) => {
+      return currentCart.filter(item => item.product_id !== product_id);
+    });
+  }
 
   return {
     cart,
     getCartTotal,
+    modifyQuantity,
+    removeFromCart
   };
 };

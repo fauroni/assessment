@@ -1,5 +1,8 @@
 import { atom, useAtom } from 'jotai';
+import axios from 'axios';
 import { produce } from 'immer';
+import { useEffect, useRef } from "react";
+import { useJwt } from "./UserStore";
 
 // Define the initial state of the cart. We put in one piece of test data
 const initialCart = [
@@ -17,9 +20,13 @@ const initialCart = [
 // Create an atom for the cart
 export const cartAtom = atom(initialCart);
 
+export const cartLoadingAtom = atom(false);
+
 // Custom hook for cart operations
 export const useCart = () => {
   const [cart, setCart] = useAtom(cartAtom);
+  const [isLoading, setIsLoading] = useAtom(cartLoadingAtom);
+  const { getJwt } = useJwt();
 
   // Function to calculate the total price of items in the cart
   const getCartTotal = () => {
@@ -73,11 +80,59 @@ export const useCart = () => {
     });
   }
 
+  const fetchCart = async () => {
+    const jwt = getJwt();
+    setIsLoading(true);
+    try {
+        const response = await axios.get(
+            `${import.meta.env.VITE_API_URL}/api/cart`,
+            {
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                },
+            }
+        );
+        setCart(Immutable(response.data));
+    } catch (error) {
+        console.error("Error fetching cart:", error);
+    } finally {
+        setIsLoading(false);
+    }
+    };
+
+    const updateCart = async (updatedCart) => {
+      const jwt = getJwt();
+      setIsLoading(true);
+      try {
+          // .map  will generate the new array
+          // which will consist of the elements from the
+          // original array but transformed somehow
+          const updatedCartItems = updatedCart.map(item => ({
+              product_id: item.product_id,
+              quantity: item.quantity
+          })
+          );
+          await axios.put(import.meta.env.VITE_API_URL + '/api/cart', {
+              cartItems: updatedCartItems
+          }, {
+              headers: {
+                  Authorization: 'Bearer ' + jwt
+              }
+          })
+
+      } catch (e) {
+          console.error("Error updating cart:", error);
+      } finally {
+          setIsLoading(false);
+      }
+  }
+  
   return {
     cart,
     addToCart,
     getCartTotal,
     modifyQuantity,
-    removeFromCart
+    removeFromCart, 
+    fetchCart
   };
 };

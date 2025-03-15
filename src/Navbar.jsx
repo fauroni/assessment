@@ -1,74 +1,81 @@
-import React, { useState, useEffect } from 'react';
-import {Link, useLocation} from 'wouter';
+import { useState } from "react";
+import {Link, useLocation} from "wouter"
 
-function Navbar() {
-  const [isNavbarShowing, setNavbarShowing] = useState(false);
+export default function Navbar() {
 
-  const [location] = useLocation();
+    // state variable are created before the `return` and
+    // not within the JSX
+    const [showNavBar, setShowNavBar] = useState(false);
 
-  useEffect(() => {
-    const syncNavbarState = () => {
-      setNavbarShowing(window.innerWidth >= 992);
-    };
+    const showNavBarOrNot = () => {
+        if (showNavBar) {
+            return "show"
+        } else {
+            return "";
+        }
+    }
 
-    syncNavbarState();
-    window.addEventListener('resize', syncNavbarState);
-    return () => window.removeEventListener('resize', syncNavbarState);
-  }, []);
+    const showActive = (url) => {
+        if (location === url) {
+            return "active";
+        }
+        return "";
+    }
 
-  const toggleNavbar = () => {
-    setNavbarShowing(!isNavbarShowing);
-  };
+    // use the useLocation hook to get the current URL (aka location) of the browser
+    // a hook = is a way to add extra functionality to a component
+    const [location] = useLocation();
 
-  return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div className="container">
-      <li className="nav-item">
-              <Link href="/login" className={`nav-link ${location === '/login' ? 'active' : ''}`}>
-                Login
-              </Link>
-            </li>
-      <Link href="/" className="navbar-brand">E-Shop</Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          onClick={toggleNavbar}
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className={`collapse navbar-collapse ${isNavbarShowing ? "show" : ""}`} id="navbarNav">
+    return (
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div className="container">
+                <a className="navbar-brand" href="#">E-Shop</a>
+                {/* Hamburger Button */}
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                    onClick={() => {
+                        // toggle showNavBar 
+                        // if true, set to false.
+                        // if false, set to true.
+                        if (showNavBar) {
+                            setShowNavBar(false)
+                        } else {
+                            setShowNavBar(true)
+                        }
 
-        <li className="nav-item">
-              <Link href="/cart" className={`nav-link ${location === '/cart' ? 'active' : ''}`}>
-                Cart
-              </Link>
-            </li>
+                        // setShowNavBar(!showNavBar)
 
-          <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li className="nav-item">
-            <Link href="/products" className={`nav-link ${location === '/products' ? 'active' : ''}`}>
-                Products
-              </Link>
-            </li>
-        
-            <li className="nav-item">
-            <Link href="/register" className={`nav-link ${location === '/register' ? 'active' : ''}`}>
-                Register
-              </Link>
-            </li>
-            <li className="nav-item">
-            <Link href="/about" className={`nav-link ${location === '/about' ? 'active' : ''}`}>
-                About
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  );
+                    }}
+                >
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                {/* The nav menu */}
+                <div className={`collapse navbar-collapse ${showNavBarOrNot()}`} id="navbarNav">
+                    <ul className="navbar-nav ms-auto">
+                        <li className="nav-item">
+                            <Link className={`nav-link ${location === '/' ? 'active' : ''}`} aria-current="page" href="/">Home</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className={`nav-link ${showActive("/products")}`} href="/products">Products</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className={`nav-link ${showActive("/cart")}`} href="/cart">Cart</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className={`nav-link ${location === "/register" ? "active" :""}`} href="/register">Register</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className={`nav-link ${location === "/login" ? "active" :""}`} href="/login">Login</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className={`nav-link ${location === "/profile" ? "active" :""}`} href="/profile">Profile</Link>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>);
 }
-
-export default Navbar;

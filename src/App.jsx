@@ -34,6 +34,8 @@ function App() {
         <Route path="/" component={HomePage} />
         <Route path="/products" component={ProductsPage} />
         <Route path="/register" component={RegisterPage} />
+        <Route path="/login" component={UserLogin} />
+        <Route path="/cart" component={ShoppingCart} />
       </Switch>
 
       <footer className="bg-dark text-white text-center py-3">

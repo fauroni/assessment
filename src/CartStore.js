@@ -75,6 +75,7 @@ export const useCart = () => {
 
   return {
     cart,
+    addToCart,
     getCartTotal,
     modifyQuantity,
     removeFromCart

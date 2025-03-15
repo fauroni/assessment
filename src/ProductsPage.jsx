@@ -5,6 +5,7 @@ import { useCart } from './CartStore';
 import { useLocation } from 'wouter';
 import { useFlashMessage } from './FlashMessageStore';
 
+
 export default function ProductPage() {
 
     const [products, setProducts] = useState([]);
@@ -26,11 +27,30 @@ export default function ProductPage() {
     }
 
     useEffect(() => {
-        const fetchData = async () => {
-            const response = await axios.get("products.json");
-            setProducts(response.data);
+      const fetchProducts = async () => {
+        try {
+          const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
+          setProducts(response.data);
+        } catch (error) {
+          console.error('Error fetching products:', error);
         }
-        fetchData();
+      };
+    useEffect(() => {
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
+      setProducts(response.data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
+
+  fetchProducts();
+}, []);
+
+
+
+      fetchProducts();
     }, []);
 
     return (

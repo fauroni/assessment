@@ -23,6 +23,11 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
+      <li className="nav-item">
+              <Link href="/login" className={`nav-link ${location === '/login' ? 'active' : ''}`}>
+                Login
+              </Link>
+            </li>
       <Link href="/" className="navbar-brand">E-Shop</Link>
         <button
           className="navbar-toggler"

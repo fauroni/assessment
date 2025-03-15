@@ -21,8 +21,9 @@ const ShoppingCart = () => {
                     <button className="btn btn-sm btn-secondary me-2" onClick={() => modifyQuantity(item.product_id, item.quantity - 1)}>-</button>
                     <p className="mb-0">Quantity: {item.quantity}</p>
                     <button className="btn btn-sm btn-secondary ms-2" onClick={() => modifyQuantity(item.product_id, item.quantity + 1)}>+</button>
+                    <button className="btn btn-sm btn-danger ms-2" onClick={() => removeFromCart(item.product_id)}>Remove</button>
                   </div>
-                  
+
                   <p>Quantity: {item.quantity}</p>
                 </div>
                 <span>${(item.price * item.quantity).toFixed(2)}</span>

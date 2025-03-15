@@ -35,21 +35,6 @@ export default function ProductPage() {
           console.error('Error fetching products:', error);
         }
       };
-    useEffect(() => {
-  const fetchProducts = async () => {
-    try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
-      setProducts(response.data);
-    } catch (error) {
-      console.error('Error fetching products:', error);
-    }
-  };
-
-  fetchProducts();
-}, []);
-
-
-
       fetchProducts();
     }, []);
 

@@ -33,7 +33,7 @@ export default function UserProfile() {
 
 
         const fetchData = async () => {
-            const token = getJwt();
+            const token = getJwt();            
             const response = await axios.get(
                 `${import.meta.env.VITE_API_URL}/api/users/me`, {
                 headers: {
@@ -150,7 +150,7 @@ export default function UserProfile() {
                 );
             }}
         </Formik>
-        <button class="btn btn-danger" onClick={handleDeleteAccount}>Delete Account</button>
+        <button className="btn btn-danger" onClick={handleDeleteAccount}>Delete Account</button>
     </div>
     )
 }

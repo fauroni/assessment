@@ -43,7 +43,7 @@ function RegisterPage() {
   // when the user submits the form
   const handleSubmit = async (values, formikHelpers) => {
     try {
-      console.log(values);
+      // console.log(values);
 
       // register the user
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/register`, values);
@@ -54,7 +54,7 @@ function RegisterPage() {
 
  
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       showMessage("Error registering", 'danger');
     }
 

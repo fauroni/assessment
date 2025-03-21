@@ -28,6 +28,9 @@ function HomePage() {
             imageUrl={product.image}
             productName={product.name}
             price={product.price.toFixed(2)}
+            onAddToCart={() => {
+              handleAddToCart(product)
+            }}
           />
         </div>
       );

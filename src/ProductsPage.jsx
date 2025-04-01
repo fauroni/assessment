@@ -15,16 +15,30 @@ export default function ProductPage() {
 
     const handleAddToCart = (product) => {
         addToCart({
-            id: Math.floor(Math.random()* 9999 + 1),
-            product_id: product.id,
-            productName: product.name,
-            imageUrl: product.image,
-            price: product.price,
-            description: product.description
+         "id": Math.floor(Math.random() * 10000) + 1,
+         "product_id": product.id,
+         "productName": product.name,
+         "price": product.price,
+         "imageUrl": product.image,
+         "description": product.description,
+         "quantity": 1
         });
         showMessage("Product added to cart", "success");
         setLocation("/cart");
-    }
+     }
+
+    // const handleAddToCart = (product) => {
+    //     addToCart({
+    //         id: Math.floor(Math.random()* 9999 + 1),
+    //         product_id: product.id,
+    //         productName: product.name,
+    //         imageUrl: product.image,
+    //         price: product.price,
+    //         description: product.description
+    //     });
+    //     showMessage("Product added to cart", "success");
+    //     setLocation("/cart");
+    // }
 
     useEffect(() => {
       const fetchProducts = async () => {

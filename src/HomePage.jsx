@@ -1,9 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ProductCard from './ProductCard';
+import { useCart } from './CartStore';
+import { useLocation } from 'wouter';
+
 
 function HomePage() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
+  const { addToCart } = useCart();
+  const [, setLocation] = useLocation();
+
+  const handleAddToCart = (product) => {
+    addToCart({
+      "id": Math.floor(Math.random() * 10000) + 1,
+      "product_id": product.id,
+      "productName": product.name,
+      "price": product.price,
+      "imageUrl": product.image,
+      "description": product.description,
+      "quantity": 1
+    });
+    setLocation("/cart");
+  }
 
   useEffect(() => {
     const fetchFeaturedProducts = async () => {

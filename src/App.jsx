@@ -7,6 +7,7 @@ import RegisterPage from './RegisterPage';
 import { useFlashMessage } from './FlashMessageStore';
 import UserLogin from './UserLogin';
 import UserProfile from './UserProfile';
+import ShoppingCart from './ShoppingCart';
 
 function App() {
   const { getMessage, clearMessage  } = useFlashMessage();
@@ -38,8 +39,7 @@ function App() {
         <Route path="/register" component={RegisterPage} />
         <Route path="/login" component={UserLogin} />
         <Route path="/profile" component={UserProfile} />
-
-        {/* <Route path="/cart" component={ShoppingCart} /> */}
+        <Route path="/cart" component={ShoppingCart} />
       </Switch>
 
       <footer className="bg-dark text-white text-center py-3">

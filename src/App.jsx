@@ -8,6 +8,8 @@ import { useFlashMessage } from './FlashMessageStore';
 import UserLogin from './UserLogin';
 import UserProfile from './UserProfile';
 import ShoppingCart from './ShoppingCart';
+import SuccessPayment from "./SuccessPayment";
+import CancelledPayment from "./CancelledPayment";
 
 function App() {
   const { getMessage, clearMessage  } = useFlashMessage();
@@ -40,6 +42,8 @@ function App() {
         <Route path="/login" component={UserLogin} />
         <Route path="/profile" component={UserProfile} />
         <Route path="/cart" component={ShoppingCart} />
+        <Route path="/success_payment" component={SuccessPayment}/>
+        <Route path="/cancelled_payment" component={CancelledPayment}/>
       </Switch>
 
       <footer className="bg-dark text-white text-center py-3">
